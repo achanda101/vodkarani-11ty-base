@@ -8,10 +8,109 @@ const pluginRss = require("@11ty/eleventy-plugin-rss");
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginNavigation = require("@11ty/eleventy-navigation");
 
-module.exports = function(eleventyConfig) {
-  // Copy the `img` and `css` folders to the output
+// Image optimisation using eleventy-img
+const Image = require('@11ty/eleventy-img');
+const outdent = require('outdent');
+
+/** Maps a config of attribute-value pairs to an HTML string
+ * representing those same attribute-value pairs.
+ */
+const stringifyAttributes = (attributeMap) => {
+  return Object.entries(attributeMap)
+    .map(([attribute, value]) => {
+      if (typeof value === 'undefined') return '';
+      return `${attribute}="${value}"`;
+    })
+    .join(' ');
+};
+
+// Generating Low-Quality Image Placeholders
+const ImageWidths = {
+  PLACEHOLDER: 24,
+};
+
+const imageShortcode = async (
+  src,
+  alt,
+  className = undefined,
+  sizes = '100vw',
+  widths = [400, 800, 1280],
+  formats = ['webp', 'jpeg'],
+) => {
+  const imageMetadata = await Image(src, {
+    widths: [ImageWidths.PLACEHOLDER,...widths, null],
+    formats: [...formats, null],
+    outputDir: '_site/assets/images',
+    urlPath: '/assets/images'
+  });
+
+  const getLargestImage = (format) => {
+    const images = imageMetadata[format];
+    return images[images.length - 1];
+  }
+
+  const getPlaceholderImage = (format) => {
+    const images = imageMetadata[format];
+    return images[0];
+  }
+
+  const largestUnoptimizedImg = getLargestImage(formats[0]);
+  const placeholderImg = getPlaceholderImage(formats[0]);
+
+  const sourceHtmlString = Object.values(imageMetadata)
+    // Map each format to the source HTML markup
+    .map((images) => {
+      // The first entry is representative of all the others
+      // since they each have the same shape
+      const { sourceType } = images[0];
+
+      // Use our util from earlier to make our lives easier
+      const sourceAttributes = stringifyAttributes({
+        type: sourceType,
+        // srcset needs to be a comma-separated attribute
+        srcset: placeholderImg.url + ' 24w',
+        'data-srcset': images.map((image) => image.srcset).join(', '),
+        sizes : sizes,
+        'data-sizes' : sizes,
+      });
+
+      // Return one <source> per format
+      return `<source ${sourceAttributes}>`;
+    })
+    .join('\n');
+
+  const imgAttributes = stringifyAttributes({
+    src: placeholderImg.url,
+    'data-src': largestUnoptimizedImg.url,
+    alt,
+    loading: 'lazy',
+    decoding: 'async',
+  });
+  const imgHtmlString = `<img ${imgAttributes}>`;
+
+  const pictureAttributes = stringifyAttributes({
+    class: className,
+  });
+  const picture = `<picture ${pictureAttributes}>
+    ${sourceHtmlString}
+    ${imgHtmlString}
+  </picture>`;
+
+  return outdent`${picture}`;
+};
+
+module.exports = function (eleventyConfig) {
+  eleventyConfig.addNunjucksAsyncShortcode('image', imageShortcode);
+
+  // Copy the `img` folder to the output
   eleventyConfig.addPassthroughCopy("img");
-  eleventyConfig.addPassthroughCopy("css");
+
+  // Watch CSS files for changes
+  // Refresh the browser when your CSS changes,
+  // without triggering a rebuild of all your pages by Eleventy
+  eleventyConfig.setBrowserSyncConfig({
+		files: './_site/css/**/*.css'
+	});
 
   // Add plugins
   eleventyConfig.addPlugin(pluginRss);
@@ -125,7 +224,7 @@ module.exports = function(eleventyConfig) {
 
     // These are all optional (defaults are shown):
     dir: {
-      input: ".",
+      input: "src",
       includes: "_includes",
       data: "_data",
       output: "_site"

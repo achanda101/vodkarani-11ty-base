@@ -24,8 +24,8 @@
     --color-gray-90: #dad8d8;
 
     /* --text-color is assigned to --color-gray-_ above */
-    --text-color-link: #1493fb;
-    --text-color-link-visited: #a6a6f8;
+    --text-color-link: #fb9314;
+    --text-color-link-visited: #f8d6a6;
 
     --background-color: #15202b;
   }
@@ -50,8 +50,7 @@ p:last-child {
   margin-bottom: 0;
 }
 p,
-.tmpl-post li,
-img {
+.tmpl-post li {
   max-width: 37.5em; /* 600px /16 */
 }
 p,
@@ -253,4 +252,14 @@ a[href].direct-link:focus:visited,
 :hover > a[href].direct-link,
 :hover > a[href].direct-link:visited {
   color: #aaa;
+}
+
+// Lazy loading of images with blur
+.lazy-picture {
+  filter: blur(8px);
+  transition: filter 0.3s ease-in;
+}
+
+.lazy-picture[data-loaded] {
+  filter: unset;
 }
