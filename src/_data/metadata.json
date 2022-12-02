@@ -2,7 +2,7 @@
   "title": "Vodkarani 11ty Base",
   "url": "https://example.com/",
   "language": "en",
-  "description": "A skeleton 11ty static website with a responsive dropdown menu and lazy-loading images using 11ty-image plugin.",
+  "description": "A skeleton 11ty static landing page (from Kevin Powell's Youtube series) with a responsive dropdown menu and lazy-loading images using 11ty-image plugin and IntersectionObserver API.",
   "feed": {
     "subtitle": "A skeleton 11ty static website.",
     "filename": "feed.xml",
