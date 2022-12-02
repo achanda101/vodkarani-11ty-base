@@ -1,10 +1,10 @@
 {
-  "title": "Your Blog Name",
+  "title": "Vodkarani 11ty Base",
   "url": "https://example.com/",
   "language": "en",
-  "description": "I am writing about my experiences as a naval navel-gazer.",
+  "description": "A skeleton 11ty static website with a responsive dropdown menu and lazy-loading images using 11ty-image plugin.",
   "feed": {
-    "subtitle": "I am writing about my experiences as a naval navel-gazer.",
+    "subtitle": "A skeleton 11ty static website.",
     "filename": "feed.xml",
     "path": "/feed/feed.xml",
     "id": "https://example.com/"
@@ -14,8 +14,8 @@
     "url": "https://example.com/feed/feed.json"
   },
   "author": {
-    "name": "Your Name Here",
-    "email": "youremailaddress@example.com",
-    "url": "https://example.com/about-me/"
+    "name": "Amrita Chanda",
+    "email": "amrita.chanda@gmail.com",
+    "url": "https://vodkrani.codes"
   }
 }

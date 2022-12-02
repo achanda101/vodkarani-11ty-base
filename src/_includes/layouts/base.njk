@@ -7,43 +7,181 @@
     <meta name="description" content="{{ description or metadata.description }}">
 
     {#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
-    {#- <meta name="generator" content="{{ eleventy.generator }}"> #}
+    <meta name="generator" content="{{ eleventy.generator }}">
+
+    <!-- openprops -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/open-props" />
+    <!-- Not using open props normalize. Using Andy Bell's css reset -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/open-props/fonts.min.css" />
+    <link rel="stylesheet"
+          href="https://unpkg.com/open-props/sizes.min.css" />
+    
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com" />
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap"
+          rel="stylesheet" />
 
     <link rel="stylesheet" href="{{ '/css/index.css' | url }}">
-    <link rel="stylesheet" href="{{ '/css/prism-base16-monokai.dark.css' | url }}">
-    <link rel="stylesheet" href="{{ '/css/prism-diff.css' | url }}">
+    
     <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
     <link rel="alternate" href="{{ metadata.jsonfeed.path | url }}" type="application/json" title="{{ metadata.title }}">
   </head>
   <body>
-    <header>
-      <h1 class="home"><a href="{{ '/' | url }}">{{ metadata.title }}</a></h1>
-
-      {#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
-      <ul class="nav">
-      {%- for entry in collections.all | eleventyNavigation %}
-        <li class="nav-item{% if entry.url == page.url %} nav-item-active{% endif %}"><a href="{{ entry.url | url }}">{{ entry.title }}</a></li>
-      {%- endfor %}
-      </ul>
+    <header class="primary-header">
+      <div class="container">
+        <div class="nav-wrapper">
+          <!-- The aria-expanded indicates to assistive technology whether the controlled element is expanded or collapsed. Use the aria-owns property on the elements that own expandable grouping containers. If the expandable and collapsible grouping container is not owned by the element that has the aria-expanded attribute, use the aria-controls property to reference the grouping container instead. (MDN Docs) -->
+          <a href="#">
+            <svg class="logo"
+                 width="146"
+                 height="24">
+              <use xlink:href="img/logo.svg#logo"></use>
+            </svg>
+          </a>
+          <button class="mobile-nav-toggle"
+                  aria-controls="primary-navigation"
+                  aria-expanded="false">
+            <span class="visually-hidden">Menu</span>
+          </button>
+          <!-- aria-controls cannot look at a class, it has to look at an id -->
+          <nav aria-label="Primary"
+               class="primary-navigation"
+               id="primary-navigation">
+            <ul aria-label="Primary"
+                role="list"
+                class="nav-list">
+              <li>
+                <div class="dropdown"
+                     data-dropdown>
+                  <div class="link"
+                       data-dropdown-link>Pricing</div>
+                  <div class="dropdown-menu">
+                    <ul aria-label="Secondary"
+                        role="list"
+                        class="sub-nav-list">
+                      <li><a href="#">Blah Blah Link 1</a></li>
+                      <li><a href="#">Link 2</a></li>
+                      <li><a href="#">Link 3</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="dropdown"
+                     data-dropdown>
+                  <div class="link"
+                       data-dropdown-link>Product</div>
+                  <div class="dropdown-menu">
+                    <ul aria-label="Secondary"
+                        role="list"
+                        class="sub-nav-list">
+                      <li><a href="#">Link 1</a></li>
+                      <li><a href="#">Blah Blah Link 2</a></li>
+                      <li><a href="#">Link 3</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Community</a></li>
+            </ul>
+          </nav>
+          <button class="button | display-md-inline-flex display-sm-none">Get Started</button>
+        </div>
+      </div>
     </header>
 
     <main{% if templateClass %} class="{{ templateClass }}"{% endif %}>
 
-      <!-- Delete this message -->
-      <div class="infobox">
-        <ol>
-          <li>Edit the <code>_data/metadata.json</code> with your blog’s information.</li>
-          <li>(Optional) Edit <code>.eleventy.js</code> with your <a href="https://www.11ty.dev/docs/config/">configuration preferences</a>.</li>
-          <li>Delete this message from <code>_includes/layouts/base.njk</code>.</li>
-        </ol>
-        <p><em>This is an <a href="https://www.11ty.dev/">Eleventy project</a> created from the <a href="https://github.com/11ty/eleventy-base-blog"><code>eleventy-base-blog</code> repo</a>.</em></p>
-      </div>
-      <!-- Stop deleting -->
-
       {{ content | safe }}
+
     </main>
 
-    <footer></footer>
+    <footer class="primary-footer | padding-block-8 bg-neutral-900 text-neutral-100">
+      <div class="container">
+        <div class="primary-footer-wrapper">
+          <div class="primary-footer-logo-social">
+            <a href="#"
+               aria-label="home">
+              <svg class="logo"
+                   width="146"
+                   height="24">
+                <use xlink:href="img/logo.svg#logo"></use>
+              </svg>
+            </a>
+            <ul class="social-list"
+                role="list"
+                aria-label="social media links">
+              <li>
+                <a aria-label="facebook"
+                   href="#">
+                  <svg class="social-icon">
+                    <use xlink:href="img/social-icons.svg#icon-facebook"></use>
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a aria-label="youtube"
+                   href="#">
+                  <svg class="social-icon">
+                    <use xlink:href="img/social-icons.svg#icon-youtube"></use>
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a aria-label="twitter"
+                   href="#">
+                  <svg class="social-icon">
+                    <use xlink:href="img/social-icons.svg#icon-twitter"></use>
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a aria-label="pinterest"
+                   href="#">
+                  <svg class="social-icon">
+                    <use xlink:href="img/social-icons.svg#icon-pinterest"></use>
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a aria-label="instagram"
+                   href="#">
+                  <svg class="social-icon">
+                    <use xlink:href="img/social-icons.svg#icon-instagram"></use>
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="primary-footer-nav">
+            <nav class="footer-nav">
+              <ul aria-label="Footer"
+                  role="list">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div class="primary-footer-form">
+            <form action=""><input type="email" /><button class="button"
+                      data-glow="none">Go</button></form>
+            <p class="text-neutral-300">Copyright 2020. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
 
     <!-- Current page: {{ page.url | url }} -->
 
@@ -87,5 +225,6 @@
             img.src = img.dataset.src;
           });
     </script>
+    <script src="{{ '/utils/navigation.js' | url }}"></script>
   </body>
 </html>

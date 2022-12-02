@@ -6,7 +6,6 @@ const markdownItAnchor = require("markdown-it-anchor");
 
 const pluginRss = require("@11ty/eleventy-plugin-rss");
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
-const pluginNavigation = require("@11ty/eleventy-navigation");
 
 // Image optimisation using eleventy-img
 const Image = require('@11ty/eleventy-img');
@@ -104,6 +103,8 @@ module.exports = function (eleventyConfig) {
 
   // Copy the `img` folder to the output
   eleventyConfig.addPassthroughCopy("img");
+  // Copy the `utils` folder to the output
+  eleventyConfig.addPassthroughCopy("./src/utils");
 
   // Watch CSS files for changes
   // Refresh the browser when your CSS changes,
@@ -115,7 +116,6 @@ module.exports = function (eleventyConfig) {
   // Add plugins
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
-  eleventyConfig.addPlugin(pluginNavigation);
 
   eleventyConfig.addFilter("readableDate", dateObj => {
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("dd LLL yyyy");
@@ -144,7 +144,7 @@ module.exports = function (eleventyConfig) {
   });
 
   function filterTagList(tags) {
-    return (tags || []).filter(tag => ["all", "nav", "post", "posts"].indexOf(tag) === -1);
+    return (tags || []).filter(tag => ["all", "nav", "post", "posts", "page", "pages"].indexOf(tag) === -1);
   }
 
   eleventyConfig.addFilter("filterTagList", filterTagList)
