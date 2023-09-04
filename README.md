@@ -1,6 +1,6 @@
 # eleventy-base-blog
 
-![Kevin Powell's tutorial on building a landing page]([https://assets.digitalocean.com/articles/alligator/boo.svg](https://res.cloudinary.com/achanda/image/upload/v1693800489/Screenshot_2023-09-04_at_9.36.52_AM_acehia.png) "Building a landing page by following Kevin's tutorial from Frontend Mentor Challenge")
+![Kevin Powell's tutorial on building a landing page]([https://assets.digitalocean.com/articles/alligator/boo.svg](https://res.cloudinary.com/achanda/image/upload/v1693800489/Screenshot_2023-09-04_at_9.36.52_AM_acehia.png) "Building a landing page by following Kevin's tutorial from Frontend Mentor Challenge"
 
 [![Kevin's tutorial](https://img.youtube.com/vi/e7o69Zi-Iao/default.jpg)](https://youtu.be/e7o69Zi-Iao)
 
