@@ -43,6 +43,6 @@
     "sass": "^1.54.8"
   },
   "resolutions": {
-    "graceful-fs": "4.2.10"
+    "graceful-fs": "4.2.11"
   }
 }
